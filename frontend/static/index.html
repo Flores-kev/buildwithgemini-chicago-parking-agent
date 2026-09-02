@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicago Parking Patrol - 1980s Retro Edition</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik+Mono+One&family=Outfit:wght@400;600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+<style>
+  :root {
+    --tb-purple: #2A085C;
+    --tb-purple-light: #7B2CBF;
+    --tb-pink: #FF007F;
+    --tb-cyan: #00E5FF;
+    --tb-yellow: #FFBE0B;
+    --tb-bg: #1B0238;
+    --card-bg: #2D0B5A;
+    --text-light: #FFF9E6;
+    --border-neon: #FF007F;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Outfit', system-ui, sans-serif;
+    background: var(--tb-bg);
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-image: 
+      linear-gradient(rgba(255, 0, 127, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.08) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--tb-purple) 0%, #4A0E8F 100%);
+    border-bottom: 4px solid var(--tb-pink);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(255, 0, 127, 0.3);
+  }
+
+  .logo-title {
+    font-family: 'Rubik Mono One', cursive;
+    font-size: 1.4rem;
+    color: var(--tb-yellow);
+    text-shadow: 3px 3px 0px var(--tb-pink), 6px 6px 0px #000;
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  .logo-badge {
+    font-family: 'Righteous', cursive;
+    background: var(--tb-cyan);
+    color: var(--tb-purple);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px var(--tb-pink);
+  }
+
+  #log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.2rem;
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .msg { margin: 1rem 0; }
+  .msg.user { text-align: right; }
+
+  .bubble {
+    display: inline-block;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    background: var(--card-bg);
+    border: 2px solid var(--tb-cyan);
+    color: var(--text-light);
+    text-align: left;
+    max-width: 90%;
+    white-space: pre-wrap;
+    box-shadow: 4px 4px 0px var(--tb-pink);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .msg.user .bubble {
+    background: linear-gradient(135deg, var(--tb-pink) 0%, #D8006C 100%);
+    color: #FFF;
+    border: 2px solid var(--tb-yellow);
+    box-shadow: -4px 4px 0px var(--tb-cyan);
+    font-weight: 600;
+  }
+
+  .bubble.rich {
+    background: transparent;
+    border: none;
+    padding: 0;
+    max-width: 100%;
+    white-space: normal;
+    box-shadow: none;
+  }
+
+  .generated-img-card {
+    margin-top: 0.8rem;
+    background: var(--card-bg);
+    border: 3px solid var(--tb-yellow);
+    border-radius: 12px;
+    padding: 0.8rem;
+    box-shadow: 5px 5px 0px var(--tb-pink);
+  }
+
+  .generated-img-card img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 2px solid var(--tb-cyan);
+  }
+
+  .generated-img-caption {
+    font-family: 'Righteous', cursive;
+    color: var(--tb-yellow);
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .quick-chips {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.5rem 1rem;
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .chip-btn {
+    background: var(--tb-purple-light);
+    color: var(--tb-yellow);
+    border: 2px solid var(--tb-cyan);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-family: 'Righteous', cursive;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 2px 2px 0px var(--tb-pink);
+    transition: all 0.15s ease;
+  }
+
+  .chip-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px var(--tb-pink);
+    background: var(--tb-pink);
+    color: #FFF;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-top: 4px solid var(--tb-pink);
+    background: var(--tb-purple);
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .input-label {
+    font-family: 'Righteous', cursive;
+    font-size: 0.9rem;
+    color: var(--tb-cyan);
+    letter-spacing: 0.5px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--tb-cyan);
+    border-radius: 8px;
+    background: #15022C;
+    color: #FFF;
+    font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+    outline: none;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
+  }
+
+  input:focus {
+    border-color: var(--tb-yellow);
+    box-shadow: 0 0 10px var(--tb-yellow);
+  }
+
+  button {
+    padding: 0.8rem 1.4rem;
+    border: 2px solid var(--tb-yellow);
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--tb-pink) 0%, #C40062 100%);
+    color: #FFF;
+    font-family: 'Rubik Mono One', cursive;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px var(--tb-cyan);
+    transition: all 0.15s ease;
+  }
+
+  button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--tb-cyan);
+    background: var(--tb-yellow);
+    color: var(--tb-purple);
+  }
+
+  /* --- A2UI component styles --- */
+  .a2card {
+    border: 3px solid var(--tb-cyan);
+    border-radius: 12px;
+    padding: 1.2rem;
+    background: var(--card-bg);
+    box-shadow: 5px 5px 0px var(--tb-pink);
+    max-width: 100%;
+  }
+  .a2card + .a2card, .a2col > .a2card { margin-top: 0.8rem; }
+  .a2col { display: flex; flex-direction: column; gap: 0.5rem; }
+  .a2row { display: flex; flex-direction: row; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+  .a2row.between { justify-content: space-between; }
+  .a2text { margin: 0; line-height: 1.4; color: var(--text-light); }
+  .a2text.a2-h1 { font-family: 'Rubik Mono One', cursive; font-size: 1.4rem; color: var(--tb-yellow); }
+  .a2text.a2-h2 { font-family: 'Righteous', cursive; font-size: 1.2rem; color: var(--tb-cyan); }
+  .a2text.a2-h3 { font-weight: 700; font-size: 1.1rem; color: var(--tb-pink); }
+  .a2text.a2-h4 { font-weight: 600; font-size: 1rem; }
+  .a2text.a2-caption { font-size: 0.85rem; color: #BBB; }
+  .a2divider { border: none; border-top: 2px solid var(--tb-pink); margin: 0.6rem 0; width: 100%; }
+  .a2img { max-width: 100%; border-radius: 8px; border: 2px solid var(--tb-yellow); display: block; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.3rem; vertical-align: middle; color: var(--tb-cyan); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="logo-title">🔔 CHICAGO PARKING PATROL</h1>
+  <span class="logo-badge">1980s RETRO</span>
+</header>
+
+<div id="log"></div>
+
+<div class="quick-chips">
+  <button class="chip-btn" onclick="sendQuick('Where did I park?')">🚗 My Saved Spot</button>
+  <button class="chip-btn" onclick="sendQuick('I parked at 1200 N Milwaukee Ave')">📍 1200 N Milwaukee Ave</button>
+  <button class="chip-btn" onclick="sendQuick('I parked at 2400 N Clark St')">📍 2400 N Clark St</button>
+  <button class="chip-btn" onclick="sendQuick('I parked at 800 N Michigan Ave')">📍 800 N Michigan Ave</button>
+</div>
+
+<form id="form">
+  <label class="input-label" for="input">WHERE DID YOU PARK YOUR RIDE?</label>
+  <div class="input-row">
+    <input id="input" placeholder="e.g. 1200 N Milwaukee Ave..." autocomplete="off" autofocus>
+    <button type="submit">CHECK 🔔</button>
+  </div>
+</form>
+
+<script>
+const log = document.getElementById("log");
+const form = document.getElementById("form");
+const input = document.getElementById("input");
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function bubble(who) {
+  const m = el("div", "msg " + who);
+  const b = el("div", "bubble");
+  m.appendChild(b); log.appendChild(m); log.scrollTop = log.scrollHeight;
+  return b;
+}
+
+function sendQuick(txt) {
+  input.value = txt;
+  form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+}
+
+function boundStr(v) {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v.literalString === "string") return v.literalString;
+  return "";
+}
+
+function childIds(props) {
+  const ids = [];
+  if (props && typeof props.child === "string") ids.push(props.child);
+  const ch = props && props.children;
+  if (ch && Array.isArray(ch.explicitList)) for (const c of ch.explicitList) if (typeof c === "string") ids.push(c);
+  return ids;
+}
+
+function iconName(n) { return String(n || "").replace(/([a-z0-9])([A-Z])/g, "$1_$2").replace(/\s+/g, "_").toLowerCase(); }
+
+function buildNode(id, comps, seen) {
+  if (!id || seen.has(id)) return null;
+  seen.add(id);
+  const spec = comps[id];
+  if (!spec || typeof spec !== "object") return null;
+  const type = Object.keys(spec)[0];
+  const props = spec[type] || {};
+  const kids = () => childIds(props).map(cid => buildNode(cid, comps, seen)).filter(Boolean);
+
+  switch (type) {
+    case "Card": {
+      const d = el("div", "a2card"); kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Column":
+    case "List": {
+      const horizontal = type === "List" && props.direction === "horizontal";
+      const d = el("div", horizontal ? "a2row" : "a2col"); kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Row": {
+      const d = el("div", "a2row" + (props.distribution === "spaceBetween" ? " between" : ""));
+      kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Text": {
+      const t = el("div", "a2text");
+      const hint = String(props.usageHint || "body").toLowerCase();
+      if (["h1", "h2", "h3", "h4", "h5", "h6"].includes(hint)) t.classList.add("a2-" + hint);
+      else if (hint === "caption") t.classList.add("a2-caption");
+      t.textContent = boundStr(props.text);
+      return t;
+    }
+    case "Divider":
+      return el("hr", "a2divider");
+    case "Image": {
+      const src = boundStr(props.url || props.src);
+      if (!/^https?:\/\//i.test(src)) return null;
+      const img = el("img", "a2img"); img.src = src; img.alt = boundStr(props.alt) || ""; return img;
+    }
+    case "Icon": {
+      const s = el("span", "material-symbols-outlined"); s.textContent = iconName(boundStr(props.name) || props.name); return s;
+    }
+    default:
+      return null;
+  }
+}
+
+function renderSurface(messages, container) {
+  const comps = {};
+  const roots = [];
+  for (const m of messages) {
+    if (m.beginRendering && typeof m.beginRendering.root === "string") roots.push(m.beginRendering.root);
+    const su = m.surfaceUpdate;
+    if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.id && c.component) comps[c.id] = c.component;
+  }
+  let rootIds = roots.filter(r => comps[r]);
+  if (rootIds.length === 0) {
+    const referenced = new Set();
+    for (const id in comps) { const spec = comps[id]; childIds(spec[Object.keys(spec)[0]] || {}).forEach(c => referenced.add(c)); }
+    rootIds = Object.keys(comps).filter(id => !referenced.has(id));
+  }
+  let drew = false;
+  for (const rid of rootIds) { const node = buildNode(rid, comps, new Set()); if (node) { container.appendChild(node); drew = true; } }
+  return drew;
+}
+
+function flattenText(messages) {
+  const out = [];
+  for (const m of messages) {
+    const su = m.surfaceUpdate;
+    if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.component && c.component.Text) out.push(boundStr(c.component.Text.text));
+  }
+  return out.join("\n").trim();
+}
+
+function renderReply(b, parts) {
+  b.textContent = "";
+  const texts = parts.filter(p => p && (p.kind === "text" || (!p.kind && p.text))).map(p => p.text || "");
+  const a2ui = parts.filter(p => p && p.kind === "a2ui" && p.data).map(p => p.data);
+
+  let textStr = texts.join("\n").trim();
+
+  // Extract public image URLs (https://storage.googleapis.com/.../*.jpg|png) from text if present
+  const imageUrlMatch = textStr.match(/https:\/\/storage\.googleapis\.com\/[^\s"'\)\]>]+\.(?:jpg|jpeg|png)/i);
+  
+  if (textStr) {
+    const txtNode = el("div", null, textStr);
+    b.appendChild(txtNode);
+  }
+
+  if (imageUrlMatch) {
+    const imgCard = el("div", "generated-img-card");
+    const img = el("img", null);
+    img.src = imageUrlMatch[0];
+    img.alt = "Generated 80s Street Cross-Section";
+    const caption = el("div", "generated-img-caption", "⚡ 1980s RETRO STREET CROSS-SECTION DIAGRAM");
+    imgCard.appendChild(img);
+    imgCard.appendChild(caption);
+    b.appendChild(imgCard);
+  }
+
+  if (a2ui.length) {
+    b.classList.add("rich");
+    if (!renderSurface(a2ui, b)) b.appendChild(el("div", null, flattenText(a2ui) || "(no card content)"));
+  }
+  if (!b.childNodes.length) b.textContent = "(no response)";
+  log.scrollTop = log.scrollHeight;
+}
+
+form.addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+  bubble("user").textContent = text;
+  input.value = "";
+  const b = bubble("agent"); b.textContent = "⚡ CALLING 80s PARKING PATROL & GENERATING STREET DIAGRAM...";
+  try {
+    const res = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }) });
+    const raw = await res.text();
+    let data;
+    try { data = JSON.parse(raw); }
+    catch { throw new Error(`Server returned non-JSON (HTTP ${res.status}). ${raw.slice(0, 300)}`); }
+    renderReply(b, data.parts || []);
+  } catch (e) {
+    b.textContent = "Error: " + e.message;
+  }
+});
+</script>
+</body>
+</html>
