@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chicago Parking Patrol - Dual Theme Edition</title>
+<title>Chicago Parking Patrol - Theme-Aware & Interactive Edition</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik+Mono+One&family=Outfit:wght@400;600;800&family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
 <style>
@@ -76,7 +76,6 @@
     transition: all 0.25s ease;
   }
 
-  /* --- Top Right Theme Switcher --- */
   .theme-switcher-container {
     display: flex;
     align-items: center;
@@ -152,6 +151,145 @@
     max-width: 100%;
     white-space: normal;
     box-shadow: none;
+  }
+
+  /* --- Structured Risk Widget --- */
+  .risk-widget {
+    margin: 0.8rem 0;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #1E053D;
+    border: 2px solid var(--tb-cyan);
+    box-shadow: 4px 4px 0px var(--tb-pink);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    transition: all 0.25s ease;
+  }
+
+  .risk-widget.risk-low { border-color: #00E676; box-shadow: 4px 4px 0px #00B0FF; }
+  .risk-widget.risk-medium { border-color: #FFD600; box-shadow: 4px 4px 0px #FF6D00; }
+  .risk-widget.risk-high { border-color: #FF1744; box-shadow: 4px 4px 0px #D50000; animation: pulse-border 1.5s infinite; }
+
+  @keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 23, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 23, 68, 0); }
+  }
+
+  .risk-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .risk-title-badge {
+    font-family: 'Righteous', cursive;
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .risk-low .risk-title-badge { background: #00E676; color: #003311; }
+  .risk-medium .risk-title-badge { background: #FFD600; color: #332200; }
+  .risk-high .risk-title-badge { background: #FF1744; color: #FFFFFF; }
+
+  .timer-display {
+    font-family: 'Rubik Mono One', cursive;
+    font-size: 1.1rem;
+    color: var(--tb-yellow);
+    background: rgba(0,0,0,0.4);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--tb-cyan);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .widget-actions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    background: var(--tb-purple-light);
+    color: #FFF;
+    border: 1px solid var(--tb-cyan);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.15s ease;
+  }
+
+  .action-btn:hover {
+    background: var(--tb-pink);
+    border-color: var(--tb-yellow);
+  }
+
+  /* --- Omni Car Parking Video & Street View Container --- */
+  .omni-streetview-container {
+    margin-top: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .omni-video-card {
+    background: #0D011D;
+    border: 3px solid var(--tb-cyan);
+    border-radius: 12px;
+    padding: 0.8rem;
+    box-shadow: 4px 4px 0px var(--tb-pink);
+  }
+
+  .omni-video-title {
+    font-family: 'Righteous', cursive;
+    color: var(--tb-cyan);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .omni-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: #110022;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--tb-yellow);
+  }
+
+  canvas.omni-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .streetview-link-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--tb-cyan);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .generated-img-card {
@@ -298,7 +436,6 @@
   .a2img { max-width: 100%; border-radius: 8px; border: 2px solid var(--tb-yellow); display: block; }
   .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.3rem; vertical-align: middle; color: var(--tb-cyan); }
 
-
   /* ==========================================================================
      GOOGLE BRAND THEME OVERRIDES ([data-theme="google"])
      ========================================================================== */
@@ -369,6 +506,36 @@
     box-shadow: 0 2px 6px rgba(26,115,232,0.3);
     border-radius: 18px 18px 4px 18px;
     font-weight: 500;
+  }
+
+  html[data-theme="google"] .risk-widget {
+    background: #FFFFFF;
+    border: 1px solid #DADCE0;
+    box-shadow: 0 2px 8px rgba(60,64,67,0.12);
+  }
+
+  html[data-theme="google"] .timer-display {
+    background: #F1F3F4;
+    color: #202124;
+    border: 1px solid #DADCE0;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+  }
+
+  html[data-theme="google"] .action-btn {
+    background: #1A73E8;
+    color: #FFFFFF;
+    border: none;
+  }
+
+  html[data-theme="google"] .omni-video-card {
+    background: #FFFFFF;
+    border: 1px solid #DADCE0;
+    box-shadow: 0 2px 8px rgba(60,64,67,0.12);
+  }
+
+  html[data-theme="google"] .omni-video-title {
+    font-family: 'Google Sans', sans-serif;
+    color: #1A73E8;
   }
 
   html[data-theme="google"] .generated-img-card {
@@ -620,12 +787,150 @@ function flattenText(messages) {
   return out.join("\n").trim();
 }
 
+// --- Live Countdown & Calendar Functions ---
+function addToCalendar(title, details, isoTime) {
+  const dateStr = (isoTime ? new Date(isoTime) : new Date(Date.now() + 3 * 3600 * 1000)).toISOString().replace(/-|:|\.\d+/g, "");
+  const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(details)}&dates=${dateStr}/${dateStr}`;
+  window.open(gcalUrl, '_blank');
+}
+
+function startCountdown(timerEl, targetTimeMs) {
+  function update() {
+    const now = Date.now();
+    const diff = Math.max(0, targetTimeMs - now);
+    if (diff === 0) {
+      timerEl.textContent = "00h 00m 00s (EXPIRED)";
+      return;
+    }
+    const h = Math.floor(diff / (1000 * 3600)).toString().padStart(2, "0");
+    const m = Math.floor((diff % (1000 * 3600)) / (1000 * 60)).toString().padStart(2, "0");
+    const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, "0");
+    timerEl.textContent = `${h}h ${m}m ${s}s`;
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// --- Omni Canvas Car Parking Animation ---
+function initOmniParkingCanvas(canvas) {
+  const ctx = canvas.getContext('2d');
+  let x = 10;
+  let targetX = 180;
+  let animFrame;
+
+  function render() {
+    canvas.width = canvas.parentElement.clientWidth || 300;
+    canvas.height = 180;
+    const w = canvas.width;
+    const h = canvas.height;
+
+    // Background road & curb
+    ctx.fillStyle = "#110022";
+    ctx.fillRect(0, 0, w, h);
+
+    // Sidewalk & Curb
+    ctx.fillStyle = "#2D0B5A";
+    ctx.fillRect(0, 0, w, 40);
+    ctx.fillStyle = "#00E5FF";
+    ctx.fillRect(0, 38, w, 4);
+
+    // Parking slot box
+    ctx.strokeStyle = "#00E676";
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.strokeRect(170, 48, 120, 60);
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = "#00E676";
+    ctx.font = "12px Outfit, sans-serif";
+    ctx.fillText("SAFE SPOT", 200, 82);
+
+    // Move car toward parking slot
+    if (x < targetX) {
+      x += 1.5;
+    }
+
+    // Car body (1980s Retro Sports Car)
+    ctx.fillStyle = "#FF007F";
+    ctx.fillRect(x, 58, 80, 36);
+    ctx.fillStyle = "#FFBE0B";
+    ctx.fillRect(x + 55, 64, 20, 24);
+
+    // Wheels
+    ctx.fillStyle = "#00E5FF";
+    ctx.beginPath(); ctx.arc(x + 18, 94, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x + 62, 94, 8, 0, Math.PI * 2); ctx.fill();
+
+    // Headlights
+    ctx.fillStyle = "#FFBE0B";
+    ctx.fillRect(x + 76, 68, 4, 8);
+
+    if (x >= targetX) {
+      ctx.fillStyle = "#00E676";
+      ctx.font = "bold 14px Outfit, sans-serif";
+      ctx.fillText("✅ PARKED SAFELY!", 160, 140);
+    } else {
+      animFrame = requestAnimationFrame(render);
+    }
+  }
+
+  render();
+}
+
 function renderReply(b, parts) {
   b.textContent = "";
   const texts = parts.filter(p => p && (p.kind === "text" || (!p.kind && p.text))).map(p => p.text || "");
   const a2ui = parts.filter(p => p && p.kind === "a2ui" && p.data).map(p => p.data);
 
   let textStr = texts.join("\n").trim();
+
+  // Extract risk level
+  let riskLevel = "LOW";
+  let riskClass = "risk-low";
+  let riskIcon = "🟢";
+  let riskTitle = "SAFE TO PARK / LOW RISK";
+
+  if (/DANGER|HIGH RISK|TOW|IMPOUND|BAN/i.test(textStr)) {
+    riskLevel = "HIGH";
+    riskClass = "risk-high";
+    riskIcon = "🚨";
+    riskTitle = "HIGH RISK / TOW DANGER - MOVE IMMEDIATELY";
+  } else if (/WARNING|MEDIUM RISK|SWEEPING|RESTRICTED|METER/i.test(textStr)) {
+    riskLevel = "MEDIUM";
+    riskClass = "risk-medium";
+    riskIcon = "⚠️";
+    riskTitle = "MEDIUM RISK / TIME-RESTRICTED PARKING";
+  }
+
+  // Extract address if available
+  const addrMatch = textStr.match(/\b(?:\d{1,5}\s+[NnSsEeWw]?\s*[A-Za-z0-9\s]+(?:Ave|St|Blvd|Rd|Dr|Way|Pl|Ct))\b/i);
+  const currentAddress = addrMatch ? addrMatch[0] : "Chicago Parking Zone";
+
+  // Create Structured Risk Widget (Recommendation #2)
+  const widget = el("div", `risk-widget ${riskClass}`);
+  const headerDiv = el("div", "risk-header");
+  const badgeSpan = el("div", "risk-title-badge", `${riskIcon} ${riskTitle}`);
+  
+  const timerDisplay = el("div", "timer-display");
+  timerDisplay.innerHTML = `<span class="material-symbols-outlined">schedule</span> <span id="timer-${Date.now()}">03h 00m 00s</span>`;
+  
+  headerDiv.appendChild(badgeSpan);
+  headerDiv.appendChild(timerDisplay);
+  widget.appendChild(headerDiv);
+
+  const targetTimeMs = Date.now() + 3 * 3600 * 1000;
+  setTimeout(() => {
+    const timerEl = timerDisplay.querySelector("span[id^='timer-']");
+    if (timerEl) startCountdown(timerEl, targetTimeMs);
+  }, 100);
+
+  const actionsDiv = el("div", "widget-actions");
+  const calBtn = el("button", "action-btn", "📅 Add Move-By Reminder");
+  calBtn.onclick = () => addToCalendar(`Chicago Parking Move-By: ${currentAddress}`, `Avoid ticket / towing at ${currentAddress}`, new Date(targetTimeMs).toISOString());
+  
+  actionsDiv.appendChild(calBtn);
+  widget.appendChild(actionsDiv);
+  b.appendChild(widget);
 
   // Extract public image URLs (https://storage.googleapis.com/.../*.jpg|png) from text if present
   const imageUrlMatch = textStr.match(/https:\/\/storage\.googleapis\.com\/[^\s"'\)\]>]+\.(?:jpg|jpeg|png)/i);
@@ -634,6 +939,30 @@ function renderReply(b, parts) {
     const txtNode = el("div", null, textStr);
     b.appendChild(txtNode);
   }
+
+  // Recommendation #4: Omni Car Parking Simulation Video & Google Maps Street View API Integration
+  const omniCard = el("div", "omni-video-card");
+  const omniTitle = el("div", "omni-video-title");
+  omniTitle.innerHTML = `<span>🎬 OMNI PARKING SIMULATION VIDEO</span> <span>📍 ${currentAddress}</span>`;
+  
+  const canvasWrapper = el("div", "omni-canvas-wrapper");
+  const canvas = el("canvas", "omni-canvas");
+  canvasWrapper.appendChild(canvas);
+  omniCard.appendChild(omniTitle);
+  omniCard.appendChild(canvasWrapper);
+
+  // Google Maps Street View Link
+  const svLinkCard = el("div", "streetview-link-card");
+  svLinkCard.innerHTML = `
+    <span style="font-size: 0.85rem; color: var(--tb-cyan);"><span class="material-symbols-outlined">streetview</span> Google Maps Street View Panorama</span>
+    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(currentAddress + ', Chicago, IL')}" target="_blank" class="action-btn" style="text-decoration: none; font-size: 0.8rem;">
+      🔍 Open Street View ↗
+    </a>
+  `;
+  omniCard.appendChild(svLinkCard);
+  b.appendChild(omniCard);
+
+  setTimeout(() => initOmniParkingCanvas(canvas), 150);
 
   if (imageUrlMatch) {
     const imgCard = el("div", "generated-img-card");
@@ -666,7 +995,12 @@ form.addEventListener("submit", async (ev) => {
   const loadingText = isGoogle ? "Checking Chicago parking restrictions..." : "⚡ CALLING 80s PARKING PATROL & GENERATING STREET DIAGRAM...";
   const b = bubble("agent"); b.textContent = loadingText;
   try {
-    const res = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }) });
+    const activeTheme = document.documentElement.getAttribute("data-theme") || "tacobell";
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text, theme: activeTheme })
+    });
     const raw = await res.text();
     let data;
     try { data = JSON.parse(raw); }

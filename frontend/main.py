@@ -141,8 +141,23 @@ def _extract_parts(parts: list) -> list[dict]:
 async def chat(req: Request):
     body = await req.json()
     message = body.get("message", "")
+    theme = body.get("theme", "tacobell")
     user_id = body.get("user_id") or "web-user"
     parts: list[dict] = []
+
+    # Theme-aware persona instruction prompt adaptation
+    if theme == "google":
+        formatted_message = (
+            f"{message}\n\n"
+            "[System Directive: The user is currently in GOOGLE BRAND MATERIAL MODE. "
+            "Please respond in a clean, concise, professional Google Material tone without 80s arcade slang.]"
+        )
+    else:
+        formatted_message = (
+            f"{message}\n\n"
+            "[System Directive: The user is currently in 1980s TACO BELL RETRO MODE. "
+            "Please respond in an energetic 1980s retro patrol persona with fun 80s synthwave/arcade slang.]"
+        )
 
     async with httpx.AsyncClient(headers=_auth_headers(), timeout=120) as client:
         card = await _get_card(client)
@@ -160,7 +175,7 @@ async def chat(req: Request):
         msg = Message(
             message_id=str(uuid.uuid4()),
             role=Role.user,
-            parts=[Part(root=TextPart(text=message))],
+            parts=[Part(root=TextPart(text=formatted_message))],
             context_id=_contexts.get(user_id),
         )
 
