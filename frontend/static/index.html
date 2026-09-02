@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="tacobell">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chicago Parking Patrol - 1980s Retro Edition</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik+Mono+One&family=Outfit:wght@400;600;800&display=swap">
+<title>Chicago Parking Patrol - Dual Theme Edition</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik+Mono+One&family=Outfit:wght@400;600;800&family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
 <style>
   :root {
@@ -31,25 +31,36 @@
       linear-gradient(rgba(255, 0, 127, 0.08) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0, 229, 255, 0.08) 1px, transparent 1px);
     background-size: 30px 30px;
+    transition: background 0.25s ease, color 0.25s ease;
   }
 
   header {
     background: linear-gradient(135deg, var(--tb-purple) 0%, #4A0E8F 100%);
     border-bottom: 4px solid var(--tb-pink);
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 4px 20px rgba(255, 0, 127, 0.3);
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    transition: all 0.25s ease;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
   }
 
   .logo-title {
     font-family: 'Rubik Mono One', cursive;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: var(--tb-yellow);
-    text-shadow: 3px 3px 0px var(--tb-pink), 6px 6px 0px #000;
+    text-shadow: 3px 3px 0px var(--tb-pink), 5px 5px 0px #000;
     letter-spacing: 1px;
     margin: 0;
+    transition: all 0.25s ease;
   }
 
   .logo-badge {
@@ -58,10 +69,44 @@
     color: var(--tb-purple);
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 800;
     text-transform: uppercase;
     box-shadow: 2px 2px 0px var(--tb-pink);
+    transition: all 0.25s ease;
+  }
+
+  /* --- Top Right Theme Switcher --- */
+  .theme-switcher-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.3rem 0.8rem;
+    border-radius: 24px;
+    border: 2px solid var(--tb-cyan);
+    box-shadow: 2px 2px 0px var(--tb-pink);
+    transition: all 0.25s ease;
+  }
+
+  .theme-label {
+    font-family: 'Righteous', cursive;
+    font-size: 0.8rem;
+    color: var(--tb-yellow);
+    letter-spacing: 0.5px;
+  }
+
+  .theme-select {
+    background: var(--tb-purple);
+    color: var(--tb-cyan);
+    border: 1px solid var(--tb-pink);
+    border-radius: 12px;
+    padding: 0.3rem 0.6rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    outline: none;
+    cursor: pointer;
   }
 
   #log {
@@ -89,6 +134,7 @@
     box-shadow: 4px 4px 0px var(--tb-pink);
     font-size: 1rem;
     line-height: 1.5;
+    transition: all 0.25s ease;
   }
 
   .msg.user .bubble {
@@ -115,6 +161,7 @@
     border-radius: 12px;
     padding: 0.8rem;
     box-shadow: 5px 5px 0px var(--tb-pink);
+    transition: all 0.25s ease;
   }
 
   .generated-img-card img {
@@ -174,6 +221,7 @@
     max-width: 860px;
     width: 100%;
     margin: 0 auto;
+    transition: all 0.25s ease;
   }
 
   .input-label {
@@ -199,6 +247,7 @@
     font-family: 'Outfit', sans-serif;
     outline: none;
     box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
+    transition: all 0.25s ease;
   }
 
   input:focus {
@@ -248,13 +297,185 @@
   .a2divider { border: none; border-top: 2px solid var(--tb-pink); margin: 0.6rem 0; width: 100%; }
   .a2img { max-width: 100%; border-radius: 8px; border: 2px solid var(--tb-yellow); display: block; }
   .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.3rem; vertical-align: middle; color: var(--tb-cyan); }
+
+
+  /* ==========================================================================
+     GOOGLE BRAND THEME OVERRIDES ([data-theme="google"])
+     ========================================================================== */
+  html[data-theme="google"] body {
+    background: #F8F9FA;
+    color: #202124;
+    font-family: 'Google Sans', 'Roboto', system-ui, sans-serif;
+    background-image: radial-gradient(#DADCE0 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  html[data-theme="google"] header {
+    background: #FFFFFF;
+    border-bottom: 1px solid #DADCE0;
+    box-shadow: 0 1px 6px rgba(60,64,67,0.1);
+  }
+
+  html[data-theme="google"] .logo-title {
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    color: #1A73E8;
+    text-shadow: none;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.3px;
+  }
+
+  html[data-theme="google"] .logo-badge {
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    background: #E6F4EA;
+    color: #137333;
+    border: 1px solid #CEEAD6;
+    box-shadow: none;
+    font-weight: 600;
+  }
+
+  html[data-theme="google"] .theme-switcher-container {
+    background: #F1F3F4;
+    border: 1px solid #DADCE0;
+    box-shadow: none;
+  }
+
+  html[data-theme="google"] .theme-label {
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    color: #5F6368;
+    font-weight: 500;
+  }
+
+  html[data-theme="google"] .theme-select {
+    background: #FFFFFF;
+    color: #202124;
+    border: 1px solid #DADCE0;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+  }
+
+  html[data-theme="google"] .bubble {
+    background: #FFFFFF;
+    border: 1px solid #DADCE0;
+    color: #202124;
+    box-shadow: 0 1px 3px rgba(60,64,67,0.12), 0 1px 2px rgba(60,64,67,0.24);
+    border-radius: 16px;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+  }
+
+  html[data-theme="google"] .msg.user .bubble {
+    background: #1A73E8;
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 2px 6px rgba(26,115,232,0.3);
+    border-radius: 18px 18px 4px 18px;
+    font-weight: 500;
+  }
+
+  html[data-theme="google"] .generated-img-card {
+    background: #FFFFFF;
+    border: 1px solid #DADCE0;
+    box-shadow: 0 2px 8px rgba(60,64,67,0.12);
+    border-radius: 12px;
+  }
+
+  html[data-theme="google"] .generated-img-card img {
+    border: 1px solid #E8EAED;
+  }
+
+  html[data-theme="google"] .generated-img-caption {
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    color: #1A73E8;
+    font-weight: 500;
+  }
+
+  html[data-theme="google"] .chip-btn {
+    background: #FFFFFF;
+    color: #3C4043;
+    border: 1px solid #DADCE0;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(60,64,67,0.1);
+  }
+
+  html[data-theme="google"] .chip-btn:hover {
+    background: #E8F0FE;
+    color: #1A73E8;
+    border-color: #D2E3FC;
+    transform: none;
+    box-shadow: 0 2px 4px rgba(60,64,67,0.15);
+  }
+
+  html[data-theme="google"] form {
+    background: #FFFFFF;
+    border-top: 1px solid #DADCE0;
+    box-shadow: 0 -2px 10px rgba(60,64,67,0.05);
+  }
+
+  html[data-theme="google"] .input-label {
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    color: #5F6368;
+    font-weight: 500;
+  }
+
+  html[data-theme="google"] input {
+    background: #F1F3F4;
+    color: #202124;
+    border: 1px solid #DADCE0;
+    border-radius: 24px;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    box-shadow: none;
+  }
+
+  html[data-theme="google"] input:focus {
+    background: #FFFFFF;
+    border-color: #1A73E8;
+    box-shadow: 0 0 0 2px rgba(26,115,232,0.2);
+  }
+
+  html[data-theme="google"] button[type="submit"] {
+    background: #1A73E8;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 24px;
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(60,64,67,0.3);
+  }
+
+  html[data-theme="google"] button[type="submit"]:hover {
+    background: #1765CC;
+    transform: none;
+    box-shadow: 0 2px 6px rgba(60,64,67,0.3);
+  }
+
+  html[data-theme="google"] .a2card {
+    border: 1px solid #DADCE0;
+    background: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(60,64,67,0.12);
+    border-radius: 12px;
+  }
+  html[data-theme="google"] .a2text { color: #202124; }
+  html[data-theme="google"] .a2text.a2-h1 { font-family: 'Google Sans', sans-serif; color: #1A73E8; }
+  html[data-theme="google"] .a2text.a2-h2 { font-family: 'Google Sans', sans-serif; color: #34A853; }
+  html[data-theme="google"] .a2text.a2-h3 { font-family: 'Google Sans', sans-serif; color: #EA4335; }
+  html[data-theme="google"] .a2divider { border-top: 1px solid #DADCE0; }
+  html[data-theme="google"] .material-symbols-outlined { color: #1A73E8; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1 class="logo-title">🔔 CHICAGO PARKING PATROL</h1>
-  <span class="logo-badge">1980s RETRO</span>
+  <div class="header-left">
+    <h1 class="logo-title" id="logo-title">🔔 CHICAGO PARKING PATROL</h1>
+    <span class="logo-badge" id="badge-text">1980s RETRO</span>
+  </div>
+  <div class="theme-switcher-container">
+    <span class="theme-label">THEME:</span>
+    <select id="theme-select" class="theme-select" onchange="setTheme(this.value)">
+      <option value="tacobell">🌮 80s Taco Bell</option>
+      <option value="google">🔵 Google Material</option>
+    </select>
+  </div>
 </header>
 
 <div id="log"></div>
@@ -267,10 +488,10 @@
 </div>
 
 <form id="form">
-  <label class="input-label" for="input">WHERE DID YOU PARK YOUR RIDE?</label>
+  <label class="input-label" id="input-label" for="input">WHERE DID YOU PARK YOUR RIDE?</label>
   <div class="input-row">
     <input id="input" placeholder="e.g. 1200 N Milwaukee Ave..." autocomplete="off" autofocus>
-    <button type="submit">CHECK 🔔</button>
+    <button type="submit" id="submit-btn">CHECK 🔔</button>
   </div>
 </form>
 
@@ -278,6 +499,22 @@
 const log = document.getElementById("log");
 const form = document.getElementById("form");
 const input = document.getElementById("input");
+
+function setTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("app-theme", theme);
+  const badge = document.getElementById("badge-text");
+  const inputLabel = document.getElementById("input-label");
+  const submitBtn = document.getElementById("submit-btn");
+  if (badge) badge.textContent = theme === "google" ? "GOOGLE BRAND" : "1980s RETRO";
+  if (inputLabel) inputLabel.textContent = theme === "google" ? "Check Chicago Parking Restrictions" : "WHERE DID YOU PARK YOUR RIDE?";
+  if (submitBtn) submitBtn.textContent = theme === "google" ? "Check Restrictions" : "CHECK 🔔";
+}
+
+// Restore saved theme preference or default to tacobell
+const savedTheme = localStorage.getItem("app-theme") || "tacobell";
+document.getElementById("theme-select").value = savedTheme;
+setTheme(savedTheme);
 
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
@@ -402,8 +639,10 @@ function renderReply(b, parts) {
     const imgCard = el("div", "generated-img-card");
     const img = el("img", null);
     img.src = imageUrlMatch[0];
-    img.alt = "Generated 80s Street Cross-Section";
-    const caption = el("div", "generated-img-caption", "⚡ 1980s RETRO STREET CROSS-SECTION DIAGRAM");
+    img.alt = "Generated Street Cross-Section";
+    const isGoogle = document.documentElement.getAttribute("data-theme") === "google";
+    const captionText = isGoogle ? "📊 Street Cross-Section Restriction Diagram" : "⚡ 1980s RETRO STREET CROSS-SECTION DIAGRAM";
+    const caption = el("div", "generated-img-caption", captionText);
     imgCard.appendChild(img);
     imgCard.appendChild(caption);
     b.appendChild(imgCard);
@@ -423,7 +662,9 @@ form.addEventListener("submit", async (ev) => {
   if (!text) return;
   bubble("user").textContent = text;
   input.value = "";
-  const b = bubble("agent"); b.textContent = "⚡ CALLING 80s PARKING PATROL & GENERATING STREET DIAGRAM...";
+  const isGoogle = document.documentElement.getAttribute("data-theme") === "google";
+  const loadingText = isGoogle ? "Checking Chicago parking restrictions..." : "⚡ CALLING 80s PARKING PATROL & GENERATING STREET DIAGRAM...";
+  const b = bubble("agent"); b.textContent = loadingText;
   try {
     const res = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }) });
     const raw = await res.text();
