@@ -1015,13 +1015,10 @@ function renderReply(b, parts) {
 
   // Recommendation #4: Realistic Omni Car Parking Video Card in front of actual building address
   const omniCard = el("div", "omni-video-card");
-  const omniTitle = el("div", "omni-video-title");
-  omniTitle.innerHTML = `<span>🎬 OMNI REALISTIC PARKING VIDEO</span> <span>🏢 ${currentAddress}</span>`;
   
   const canvasWrapper = el("div", "omni-canvas-wrapper");
   const canvas = el("canvas", "omni-canvas");
   canvasWrapper.appendChild(canvas);
-  omniCard.appendChild(omniTitle);
   omniCard.appendChild(canvasWrapper);
 
   const videoControlsBar = el("div", "video-controls-bar");
