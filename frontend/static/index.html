@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chicago Parking Patrol - Theme-Aware & Interactive Edition</title>
+<title>Chicago Parking Patrol - Realistic Street View Edition</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik+Mono+One&family=Outfit:wght@400;600;800&family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
 <style>
@@ -240,20 +240,14 @@
     border-color: var(--tb-yellow);
   }
 
-  /* --- Omni Car Parking Video & Street View Container --- */
-  .omni-streetview-container {
-    margin-top: 0.8rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
+  /* --- Omni Car Parking Realistic Video Card --- */
   .omni-video-card {
     background: #0D011D;
     border: 3px solid var(--tb-cyan);
     border-radius: 12px;
     padding: 0.8rem;
     box-shadow: 4px 4px 0px var(--tb-pink);
+    margin-top: 0.8rem;
   }
 
   .omni-video-title {
@@ -264,12 +258,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.4rem;
   }
 
   .omni-canvas-wrapper {
     position: relative;
     width: 100%;
-    height: 180px;
+    height: 240px;
     background: #110022;
     border-radius: 8px;
     overflow: hidden;
@@ -282,6 +278,15 @@
     display: block;
   }
 
+  .video-controls-bar {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
   .streetview-link-card {
     background: rgba(0,0,0,0.3);
     border: 1px solid var(--tb-cyan);
@@ -290,6 +295,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 0.5rem;
   }
 
   .generated-img-card {
@@ -811,64 +817,134 @@ function startCountdown(timerEl, targetTimeMs) {
   setInterval(update, 1000);
 }
 
-// --- Omni Canvas Car Parking Animation ---
-function initOmniParkingCanvas(canvas) {
+// --- Omni Realistic Street View Car Parking Video Canvas ---
+function initOmniParkingCanvas(canvas, address, replayBtn) {
   const ctx = canvas.getContext('2d');
-  let x = 10;
+  let x = -80;
   let targetX = 180;
   let animFrame;
+  let isLoaded = false;
+  let heading = 90;
+
+  // Real Street View Panorama Image Source based on specific building address
+  const streetImg = new Image();
+  streetImg.crossOrigin = "Anonymous";
+  const cleanAddr = address ? address.replace(/I parked at\s*/i, '').trim() : "Chicago, IL";
+  streetImg.src = `https://maps.googleapis.com/maps/api/streetview?size=600x300&location=${encodeURIComponent(cleanAddr + ', Chicago, IL')}&fov=90&heading=${heading}&pitch=0`;
+
+  streetImg.onload = () => { isLoaded = true; };
+  streetImg.onerror = () => {
+    // High quality fallback realistic Chicago street building image
+    streetImg.src = "https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=800&q=80";
+  };
+
+  function startAnimation() {
+    x = -80;
+    cancelAnimationFrame(animFrame);
+    render();
+  }
+
+  if (replayBtn) {
+    replayBtn.onclick = startAnimation;
+  }
 
   function render() {
-    canvas.width = canvas.parentElement.clientWidth || 300;
-    canvas.height = 180;
+    canvas.width = canvas.parentElement.clientWidth || 320;
+    canvas.height = 240;
     const w = canvas.width;
     const h = canvas.height;
 
-    // Background road & curb
-    ctx.fillStyle = "#110022";
-    ctx.fillRect(0, 0, w, h);
-
-    // Sidewalk & Curb
-    ctx.fillStyle = "#2D0B5A";
-    ctx.fillRect(0, 0, w, 40);
-    ctx.fillStyle = "#00E5FF";
-    ctx.fillRect(0, 38, w, 4);
-
-    // Parking slot box
-    ctx.strokeStyle = "#00E676";
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6, 4]);
-    ctx.strokeRect(170, 48, 120, 60);
-    ctx.setLineDash([]);
-
-    ctx.fillStyle = "#00E676";
-    ctx.font = "12px Outfit, sans-serif";
-    ctx.fillText("SAFE SPOT", 200, 82);
-
-    // Move car toward parking slot
-    if (x < targetX) {
-      x += 1.5;
+    // Draw Realistic Street View Building Background
+    if (streetImg.complete && streetImg.naturalWidth > 0) {
+      ctx.drawImage(streetImg, 0, 0, w, h * 0.70);
+    } else {
+      ctx.fillStyle = "#1B182B";
+      ctx.fillRect(0, 0, w, h * 0.70);
+      ctx.fillStyle = "#00E5FF";
+      ctx.font = "14px Outfit, sans-serif";
+      ctx.fillText(`🏢 Building Frontage: ${cleanAddr}`, 15, 60);
     }
 
-    // Car body (1980s Retro Sports Car)
-    ctx.fillStyle = "#FF007F";
-    ctx.fillRect(x, 58, 80, 36);
-    ctx.fillStyle = "#FFBE0B";
-    ctx.fillRect(x + 55, 64, 20, 24);
+    // Draw Asphalt Roadway & Parking Curb Line
+    ctx.fillStyle = "#1E2026";
+    ctx.fillRect(0, h * 0.70, w, h * 0.30);
+
+    // Sidewalk & Curb Line
+    ctx.fillStyle = "#70757A";
+    ctx.fillRect(0, h * 0.68, w, 6);
+    ctx.fillStyle = "#FFD600"; // Yellow Paint Curb
+    ctx.fillRect(0, h * 0.70 - 2, w, 2);
+
+    // Parking Spot Target Box in front of Building
+    ctx.strokeStyle = "#00E676";
+    ctx.lineWidth = 3;
+    ctx.setLineDash([8, 4]);
+    ctx.strokeRect(targetX - 10, h * 0.72, 110, 50);
+    ctx.setLineDash([]);
+
+    // Parking Slot Label HUD
+    ctx.fillStyle = "rgba(0, 230, 118, 0.2)";
+    ctx.fillRect(targetX - 10, h * 0.72, 110, 50);
+    ctx.fillStyle = "#00E676";
+    ctx.font = "bold 11px Outfit, sans-serif";
+    ctx.fillText("SAFE CURB ZONE", targetX, h * 0.72 - 6);
+
+    // Drive & Park Car Animation
+    if (x < targetX) {
+      x += 2.2;
+    }
+
+    // Realistic Sports Sedan Car Rendering
+    const carY = h * 0.73;
+
+    // Shadow
+    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.beginPath();
+    ctx.ellipse(x + 40, carY + 38, 45, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Car Body Metallic Red/Magenta
+    ctx.fillStyle = "#E50914";
+    ctx.beginPath();
+    ctx.roundRect(x, carY, 80, 32, 6);
+    ctx.fill();
+
+    // Car Roof / Windows
+    ctx.fillStyle = "#111A2E";
+    ctx.beginPath();
+    ctx.roundRect(x + 18, carY - 12, 44, 18, 4);
+    ctx.fill();
 
     // Wheels
-    ctx.fillStyle = "#00E5FF";
-    ctx.beginPath(); ctx.arc(x + 18, 94, 8, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(x + 62, 94, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#111";
+    ctx.beginPath(); ctx.arc(x + 18, carY + 32, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x + 62, carY + 32, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#E8EAED";
+    ctx.beginPath(); ctx.arc(x + 18, carY + 32, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x + 62, carY + 32, 4, 0, Math.PI * 2); ctx.fill();
 
-    // Headlights
-    ctx.fillStyle = "#FFBE0B";
-    ctx.fillRect(x + 76, 68, 4, 8);
+    // Headlights Beam
+    ctx.fillStyle = "rgba(255, 235, 59, 0.4)";
+    ctx.beginPath();
+    ctx.moveTo(x + 80, carY + 12);
+    ctx.lineTo(x + 140, carY + 2);
+    ctx.lineTo(x + 140, carY + 30);
+    ctx.closePath();
+    ctx.fill();
 
+    // Turn Indicator Signal when Parking
+    if (x < targetX && Math.floor(Date.now() / 200) % 2 === 0) {
+      ctx.fillStyle = "#FF9800";
+      ctx.beginPath(); ctx.arc(x + 78, carY + 8, 4, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Brake Lights when Parked
     if (x >= targetX) {
+      ctx.fillStyle = "#FF1744";
+      ctx.fillRect(x, carY + 8, 4, 12);
       ctx.fillStyle = "#00E676";
-      ctx.font = "bold 14px Outfit, sans-serif";
-      ctx.fillText("✅ PARKED SAFELY!", 160, 140);
+      ctx.font = "bold 13px Outfit, sans-serif";
+      ctx.fillText(`✅ PARKED IN FRONT OF ${cleanAddr.toUpperCase()}`, 20, 30);
     } else {
       animFrame = requestAnimationFrame(render);
     }
@@ -904,7 +980,7 @@ function renderReply(b, parts) {
 
   // Extract address if available
   const addrMatch = textStr.match(/\b(?:\d{1,5}\s+[NnSsEeWw]?\s*[A-Za-z0-9\s]+(?:Ave|St|Blvd|Rd|Dr|Way|Pl|Ct))\b/i);
-  const currentAddress = addrMatch ? addrMatch[0] : "Chicago Parking Zone";
+  const currentAddress = addrMatch ? addrMatch[0] : "1200 N Milwaukee Ave";
 
   // Create Structured Risk Widget (Recommendation #2)
   const widget = el("div", `risk-widget ${riskClass}`);
@@ -932,18 +1008,15 @@ function renderReply(b, parts) {
   widget.appendChild(actionsDiv);
   b.appendChild(widget);
 
-  // Extract public image URLs (https://storage.googleapis.com/.../*.jpg|png) from text if present
-  const imageUrlMatch = textStr.match(/https:\/\/storage\.googleapis\.com\/[^\s"'\)\]>]+\.(?:jpg|jpeg|png)/i);
-  
   if (textStr) {
     const txtNode = el("div", null, textStr);
     b.appendChild(txtNode);
   }
 
-  // Recommendation #4: Omni Car Parking Simulation Video & Google Maps Street View API Integration
+  // Recommendation #4: Realistic Omni Car Parking Video Card in front of actual building address
   const omniCard = el("div", "omni-video-card");
   const omniTitle = el("div", "omni-video-title");
-  omniTitle.innerHTML = `<span>🎬 OMNI PARKING SIMULATION VIDEO</span> <span>📍 ${currentAddress}</span>`;
+  omniTitle.innerHTML = `<span>🎬 OMNI REALISTIC PARKING VIDEO</span> <span>🏢 ${currentAddress}</span>`;
   
   const canvasWrapper = el("div", "omni-canvas-wrapper");
   const canvas = el("canvas", "omni-canvas");
@@ -951,19 +1024,22 @@ function renderReply(b, parts) {
   omniCard.appendChild(omniTitle);
   omniCard.appendChild(canvasWrapper);
 
-  // Google Maps Street View Link
-  const svLinkCard = el("div", "streetview-link-card");
-  svLinkCard.innerHTML = `
-    <span style="font-size: 0.85rem; color: var(--tb-cyan);"><span class="material-symbols-outlined">streetview</span> Google Maps Street View Panorama</span>
-    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(currentAddress + ', Chicago, IL')}" target="_blank" class="action-btn" style="text-decoration: none; font-size: 0.8rem;">
-      🔍 Open Street View ↗
-    </a>
-  `;
-  omniCard.appendChild(svLinkCard);
+  const videoControlsBar = el("div", "video-controls-bar");
+  const replayBtn = el("button", "action-btn", "🔄 Replay Parking Video");
+  const svLinkBtn = el("a", "action-btn", "🔍 Open Google Street View ↗");
+  svLinkBtn.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(currentAddress + ', Chicago, IL')}`;
+  svLinkBtn.target = "_blank";
+  svLinkBtn.style.textDecoration = "none";
+
+  videoControlsBar.appendChild(replayBtn);
+  videoControlsBar.appendChild(svLinkBtn);
+  omniCard.appendChild(videoControlsBar);
   b.appendChild(omniCard);
 
-  setTimeout(() => initOmniParkingCanvas(canvas), 150);
+  setTimeout(() => initOmniParkingCanvas(canvas, currentAddress, replayBtn), 150);
 
+  // Extract public image URLs (https://storage.googleapis.com/.../*.jpg|png) from text if present
+  const imageUrlMatch = textStr.match(/https:\/\/storage\.googleapis\.com\/[^\s"'\)\]>]+\.(?:jpg|jpeg|png)/i);
   if (imageUrlMatch) {
     const imgCard = el("div", "generated-img-card");
     const img = el("img", null);
